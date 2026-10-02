@@ -1,1 +1,0 @@
-import{mn as e}from"../jse/index-index-_SvYlc06.js";function t(t,...n){return typeof t==`function`?t(...n):typeof t==`string`?e(t):typeof t==`number`?e(String(t)):null}export{t};

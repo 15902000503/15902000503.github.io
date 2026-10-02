@@ -1,1 +1,835 @@
-<!doctype html><html lang="zh"><head><script src="/_app-config-5.7.0-7362080d.js"></script><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta name="renderer" content="webkit"><meta name="description" content="A Modern Back-end Management System"><meta name="keywords" content="Vben Admin Vue3 Vite"><meta name="author" content="Vben"><meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0"><title>Vben Admin Naive</title><link rel="icon" href="/favicon.ico"><script>if(window._VBEN_ADMIN_PRO_APP_CONF_){var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?24bb3eb91dfe4ebfcbcee6952a107cb6";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()}</script><script type="module" crossorigin src="/jse/index-index-_SvYlc06.js"></script><link rel="modulepreload" crossorigin href="/js/asyncToGenerator-CGBZTlHR.js"><link rel="modulepreload" crossorigin href="/js/objectSpread2-BHJFn0bq.js"><link rel="modulepreload" crossorigin href="/js/objectWithoutProperties-DMdbQOOl.js"><link rel="modulepreload" crossorigin href="/js/chunk-BOhHC3M6.js"></head><body><script data-app-loading="inject-js">var theme=localStorage.getItem("vben-web-naive-5.7.0-prod-preferences-theme");document.documentElement.classList.toggle("dark",/dark/.test(theme))</script><style data-app-loading="inject-css">html{line-height:1.15}.loading{position:fixed;top:0;left:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;overflow:hidden;background-color:#f4f7f9}.loading.hidden{visibility:hidden;pointer-events:none;opacity:0;transition:all .8s ease-out}.dark .loading{background:#0d0d10}.title{margin-top:66px;font-size:28px;font-weight:600;color:rgb(0 0 0 / 85%)}.dark .title{color:#fff}.loader{position:relative;width:48px;height:48px}.loader::before{position:absolute;top:60px;left:0;width:48px;height:5px;content:'';background:hsl(var(--primary,210 100% 50%) / 50%);border-radius:50%;animation:shadow-ani .5s linear infinite}.loader::after{position:absolute;top:0;left:0;width:100%;height:100%;content:'';background:hsl(var(--primary,210 100% 50%));border-radius:4px;animation:jump-ani .5s linear infinite}@keyframes jump-ani{15%{border-bottom-right-radius:3px}25%{transform:translateY(9px) rotate(22.5deg)}50%{border-bottom-right-radius:40px;transform:translateY(18px) scale(1,.9) rotate(45deg)}75%{transform:translateY(9px) rotate(67.5deg)}100%{transform:translateY(0) rotate(90deg)}}@keyframes shadow-ani{0%,100%{transform:scale(1,1)}50%{transform:scale(1.2,1)}}</style><div class="loading" id="__app-loading__"><div class="loader"></div><div class="title">Vben Admin Naive</div></div><div id="app"></div></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>独立站 · 纯净体验</title>
+  <style>
+    /* 全局重置与变量 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #0b2b4f;
+      --primary-light: #1e4a76;
+      --accent: #e6b12e;
+      --text-light: #f9fafc;
+      --text-dark: #1e2b3a;
+      --bg-light: #f2f5f9;
+      --card-bg: #ffffff;
+      --shadow-sm: 0 8px 20px rgba(0, 0, 0, 0.04), 0 4px 8px rgba(0, 0, 0, 0.02);
+      --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.06), 0 6px 12px rgba(0, 0, 0, 0.03);
+      --radius: 20px;
+      --radius-sm: 14px;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 通用容器 */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ---------- 头部 ---------- */
+    .site-header {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
+      padding: 14px 0;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 1.5rem;
+      letter-spacing: -0.03em;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(11, 43, 79, 0.2);
+      position: relative;
+    }
+
+    .logo-icon::after {
+      content: "✦";
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #2c3e50;
+      transition: color 0.2s ease;
+      padding: 6px 0;
+      border-bottom: 2px solid transparent;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      color: var(--primary);
+      border-bottom-color: var(--accent);
+      outline: none;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--primary);
+      padding: 10px 24px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--primary);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-outline:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* 移动端菜单按钮 */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 1.2rem;
+      line-height: 1;
+      color: var(--primary);
+      cursor: pointer;
+    }
+
+    /* ---------- 主内容 ---------- */
+    main {
+      flex: 1;
+    }
+
+    /* Hero 区域 */
+    .hero {
+      padding: 48px 0 64px;
+    }
+
+    .hero-grid {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+
+    .hero-content {
+      flex: 1 1 380px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230, 177, 46, 0.15);
+      color: #a8760b;
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.02em;
+      padding: 6px 16px;
+      border-radius: 40px;
+      margin-bottom: 24px;
+      border: 1px solid rgba(230, 177, 46, 0.3);
+    }
+
+    .hero-title {
+      font-size: clamp(2.3rem, 6vw, 3.8rem);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+
+    .hero-title span {
+      color: var(--accent);
+      background: linear-gradient(145deg, #d69e1a, #e6b12e);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+      font-size: 1.1rem;
+      color: #3e4d5f;
+      margin-bottom: 32px;
+      max-width: 540px;
+      line-height: 1.6;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      padding: 14px 36px;
+      border-radius: 40px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 8px 18px rgba(11, 43, 79, 0.2);
+      border: none;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-light);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(11, 43, 79, 0.25);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--primary);
+      padding: 14px 28px;
+      border-radius: 40px;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1.5px solid #d0dae6;
+      transition: all 0.2s ease;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .btn-secondary:hover {
+      background: #ffffff;
+      border-color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .hero-visual {
+      flex: 1 1 340px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .visual-card {
+      width: 100%;
+      max-width: 440px;
+      background: var(--card-bg);
+      border-radius: 32px;
+      box-shadow: var(--shadow-md);
+      padding: 28px 24px;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      transition: transform 0.25s ease;
+      backdrop-filter: blur(4px);
+    }
+
+    .visual-card:hover {
+      transform: scale(1.01);
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .stat-item {
+      flex: 1;
+      min-width: 70px;
+    }
+
+    .stat-number {
+      font-weight: 700;
+      font-size: 1.9rem;
+      color: var(--primary);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: #68788b;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .progress-group {
+      margin-bottom: 20px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: #2c3e50;
+    }
+
+    .progress-bar-bg {
+      height: 8px;
+      background: #e5eaf1;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 20px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    .fill-85 { width: 85%; }
+    .fill-70 { width: 70%; }
+    .fill-92 { width: 92%; }
+
+    .visual-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid #edf2f7;
+      font-size: 0.9rem;
+    }
+
+    .avatars {
+      display: flex;
+      align-items: center;
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #ccdae9;
+      border: 2px solid white;
+      margin-right: -8px;
+    }
+
+    .avatar:last-child {
+      margin-right: 0;
+    }
+
+    .avatar.one { background: #b7c9e2; }
+    .avatar.two { background: #d9b45b; }
+    .avatar.three { background: #7f9fbb; }
+
+    /* 特性卡片区域 */
+    .features {
+      padding: 48px 0 64px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .section-sub {
+      color: #5c6f82;
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 1rem;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 28px;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border-radius: 28px;
+      padding: 32px 26px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.25s ease;
+      border: 1px solid #f0f4fa;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(230, 177, 46, 0.25);
+    }
+
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 24px;
+      background: #eef3fa;
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 18px;
+      color: var(--primary);
+    }
+
+    .feature-card h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--primary);
+      letter-spacing: -0.01em;
+    }
+
+    .feature-card p {
+      color: #556b7c;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    /* 底部 */
+    .site-footer {
+      background: #ffffff;
+      border-top: 1px solid #e9eef4;
+      padding: 40px 0 28px;
+      margin-top: 24px;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .footer-copy {
+      color: #6f7e8f;
+      font-size: 0.9rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      text-decoration: none;
+      color: #4b5e71;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+
+    /* ---------- 响应式调整 ---------- */
+    @media (max-width: 800px) {
+      .header-inner {
+        justify-content: space-between;
+      }
+
+      .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 20px 0 8px;
+        border-top: 1px solid #eef2f7;
+        margin-top: 12px;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .nav-links a {
+        width: 100%;
+        padding: 8px 0;
+        font-size: 1rem;
+      }
+
+      .menu-toggle {
+        display: block;
+        order: 2;
+      }
+
+      .header-cta {
+        margin-left: auto;
+        order: 1;
+      }
+
+      .header-inner {
+        flex-wrap: wrap;
+      }
+
+      .btn-outline {
+        padding: 8px 18px;
+        font-size: 0.85rem;
+      }
+
+      .hero {
+        padding: 32px 0 40px;
+      }
+
+      .hero-grid {
+        gap: 32px;
+      }
+
+      .hero-actions {
+        gap: 12px;
+      }
+
+      .btn-primary, .btn-secondary {
+        padding: 12px 24px;
+        font-size: 0.95rem;
+        flex: 1 1 auto;
+        text-align: center;
+      }
+
+      .section-title {
+        font-size: 1.75rem;
+      }
+
+      .card-grid {
+        gap: 18px;
+      }
+
+      .feature-card {
+        padding: 24px 20px;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 18px;
+      }
+
+      .footer-links {
+        gap: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 18px;
+      }
+
+      .logo {
+        font-size: 1.3rem;
+      }
+
+      .logo-icon {
+        width: 28px;
+        height: 28px;
+      }
+
+      .stat-number {
+        font-size: 1.6rem;
+      }
+
+      .visual-card {
+        padding: 22px 18px;
+      }
+
+      .hero-title {
+        font-size: 2rem;
+      }
+
+      .hero-desc {
+        font-size: 1rem;
+      }
+
+      .btn-primary, .btn-secondary {
+        width: 100%;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        width: 100%;
+      }
+    }
+
+    /* 辅助类 */
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* 动画细节 */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="logo" aria-label="独立站首页">
+        <span class="logo-icon" aria-hidden="true"></span>
+        <span>Nexus</span>
+      </a>
+
+      <!-- 移动端菜单按钮 -->
+      <button class="menu-toggle" id="menuToggle" aria-label="打开菜单" aria-expanded="false" aria-controls="primaryNav">
+        ☰
+      </button>
+
+      <!-- 主导航 -->
+      <ul class="nav-links" id="primaryNav" role="list">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">功能</a></li>
+        <li><a href="#">案例</a></li>
+        <li><a href="#">定价</a></li>
+      </ul>
+
+      <a href="#" class="btn-outline header-cta">开始使用</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero 主视觉 -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <span class="hero-badge">⚡ 全新独立站体验</span>
+          <h1 class="hero-title">
+            构建你的 <span>品牌宇宙</span> 无需妥协
+          </h1>
+          <p class="hero-desc">
+            完全独立部署，数据自主掌控。为PC与移动端同时打造的现代化体验，极速、安全、可扩展。
+          </p>
+          <div class="hero-actions">
+            <a href="#" class="btn-primary">免费开始</a>
+            <a href="#" class="btn-secondary">了解更多 →</a>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="visual-card" aria-label="数据预览卡片">
+            <div class="stat-row">
+              <div class="stat-item">
+                <div class="stat-number">98%</div>
+                <div class="stat-label">满意度</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">2.4x</div>
+                <div class="stat-label">转化提升</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">15k+</div>
+                <div class="stat-label">活跃用户</div>
+              </div>
+            </div>
+
+            <div class="progress-group">
+              <div class="progress-label">
+                <span>性能指标</span>
+                <span>85%</span>
+              </div>
+              <div class="progress-bar-bg">
+                <div class="progress-fill fill-85"></div>
+              </div>
+            </div>
+
+            <div class="progress-group">
+              <div class="progress-label">
+                <span>响应速度</span>
+                <span>92%</span>
+              </div>
+              <div class="progress-bar-bg">
+                <div class="progress-fill fill-92"></div>
+              </div>
+            </div>
+
+            <div class="progress-group">
+              <div class="progress-label">
+                <span>移动适配</span>
+                <span>70%</span>
+              </div>
+              <div class="progress-bar-bg">
+                <div class="progress-fill fill-70"></div>
+              </div>
+            </div>
+
+            <div class="visual-footer">
+              <div class="avatars" aria-hidden="true">
+                <div class="avatar one"></div>
+                <div class="avatar two"></div>
+                <div class="avatar three"></div>
+              </div>
+              <span style="color:#3e5a76;">+2.3k 本周新增</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 特性卡片 -->
+    <section class="features">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">为独立站而生的核心能力</h2>
+          <p class="section-sub">从设计到部署，每一处都经过精心打磨，让品牌在任意设备上都出众。</p>
+        </div>
+
+        <div class="card-grid">
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">📱</div>
+            <h3>响应式优先</h3>
+            <p>自动适配PC、平板与手机，提供一致的浏览体验。移动端菜单、触摸优化一应俱全。</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">⚡</div>
+            <h3>极致性能</h3>
+            <p>纯净的HTML+CSS3架构，无冗余依赖。秒开加载，提升SEO排名与用户留存。</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">🔒</div>
+            <h3>完全独立</h3>
+            <p>代码自主掌控，可部署于任意服务器。无平台绑定，数据安全尽在手中。</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">🎨</div>
+            <h3>现代设计</h3>
+            <p>简洁的视觉语言，微妙的阴影与圆角，让独立站拥有不输大牌的质感。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-copy">
+        © 2025 Nexus 独立站. 保留所有权利.
+      </div>
+      <ul class="footer-links" role="list">
+        <li><a href="#">隐私政策</a></li>
+        <li><a href="#">服务条款</a></li>
+        <li><a href="#">帮助中心</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- 移动端菜单交互脚本（极简） -->
+  <script>
+    (function() {
+      const toggleBtn = document.getElementById('menuToggle');
+      const nav = document.getElementById('primaryNav');
+
+      if (toggleBtn && nav) {
+        toggleBtn.addEventListener('click', function() {
+          const isExpanded = nav.classList.toggle('active');
+          toggleBtn.setAttribute('aria-expanded', isExpanded);
+        });
+
+        // 点击导航链接后自动收起菜单（移动端）
+        nav.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', function() {
+            if (window.innerWidth <= 800) {
+              nav.classList.remove('active');
+              toggleBtn.setAttribute('aria-expanded', 'false');
+            }
+          });
+        });
+      }
+
+      // 窗口尺寸变化时重置菜单状态（避免PC端显示移动菜单）
+      window.addEventListener('resize', function() {
+        if (window.innerWidth > 800 && nav.classList.contains('active')) {
+          nav.classList.remove('active');
+          toggleBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
