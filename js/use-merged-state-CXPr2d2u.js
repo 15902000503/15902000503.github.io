@@ -1,0 +1,1 @@
+import{qn as e,sn as t}from"../jse/index-index-_SvYlc06.js";function n(n,r){return e(n,e=>{e!==void 0&&(r.value=e)}),t(()=>n.value===void 0?r.value:n.value)}export{n as t};
