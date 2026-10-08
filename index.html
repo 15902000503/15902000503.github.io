@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
@@ -345,9 +346,17 @@
       transition: width 0.4s ease;
     }
 
-    .fill-85 { width: 85%; }
-    .fill-70 { width: 70%; }
-    .fill-92 { width: 92%; }
+    .fill-85 {
+      width: 85%;
+    }
+
+    .fill-70 {
+      width: 70%;
+    }
+
+    .fill-92 {
+      width: 92%;
+    }
 
     .visual-footer {
       display: flex;
@@ -377,9 +386,17 @@
       margin-right: 0;
     }
 
-    .avatar.one { background: #b7c9e2; }
-    .avatar.two { background: #d9b45b; }
-    .avatar.three { background: #7f9fbb; }
+    .avatar.one {
+      background: #b7c9e2;
+    }
+
+    .avatar.two {
+      background: #d9b45b;
+    }
+
+    .avatar.three {
+      background: #7f9fbb;
+    }
 
     /* 特性卡片区域 */
     .features {
@@ -554,7 +571,8 @@
         gap: 12px;
       }
 
-      .btn-primary, .btn-secondary {
+      .btn-primary,
+      .btn-secondary {
         padding: 12px 24px;
         font-size: 0.95rem;
         flex: 1 1 auto;
@@ -614,7 +632,8 @@
         font-size: 1rem;
       }
 
-      .btn-primary, .btn-secondary {
+      .btn-primary,
+      .btn-secondary {
         width: 100%;
       }
 
@@ -645,7 +664,27 @@
       }
     }
   </style>
+  <!-- Meta Pixel Code -->
+  <script>
+    !function (f, b, e, v, n, t, s) {
+      if (f.fbq) return; n = f.fbq = function () {
+        n.callMethod ?
+        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+      };
+      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+      n.queue = []; t = b.createElement(e); t.async = !0;
+      t.src = v; s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s)
+    }(window, document, 'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1700871414995830');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=1700871414995830&ev=PageView&noscript=1" /></noscript>
+  <!-- End Meta Pixel Code -->
 </head>
+
 <body>
   <header class="site-header">
     <div class="container header-inner">
@@ -801,19 +840,19 @@
 
   <!-- 移动端菜单交互脚本（极简） -->
   <script>
-    (function() {
+    (function () {
       const toggleBtn = document.getElementById('menuToggle');
       const nav = document.getElementById('primaryNav');
 
       if (toggleBtn && nav) {
-        toggleBtn.addEventListener('click', function() {
+        toggleBtn.addEventListener('click', function () {
           const isExpanded = nav.classList.toggle('active');
           toggleBtn.setAttribute('aria-expanded', isExpanded);
         });
 
         // 点击导航链接后自动收起菜单（移动端）
         nav.querySelectorAll('a').forEach(link => {
-          link.addEventListener('click', function() {
+          link.addEventListener('click', function () {
             if (window.innerWidth <= 800) {
               nav.classList.remove('active');
               toggleBtn.setAttribute('aria-expanded', 'false');
@@ -823,7 +862,7 @@
       }
 
       // 窗口尺寸变化时重置菜单状态（避免PC端显示移动菜单）
-      window.addEventListener('resize', function() {
+      window.addEventListener('resize', function () {
         if (window.innerWidth > 800 && nav.classList.contains('active')) {
           nav.classList.remove('active');
           toggleBtn.setAttribute('aria-expanded', 'false');
@@ -832,4 +871,5 @@
     })();
   </script>
 </body>
+
 </html>
