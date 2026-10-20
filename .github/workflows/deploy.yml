@@ -27,7 +27,7 @@ jobs:
           cache: "pnpm"
 
       # 3. 使用 pnpm 安装依赖并构建
-      - run: pnpm install --frozen-lockfile
+      - run: pnpm install
       - run: pnpm run build
 
       - uses: actions/configure-pages@v5
