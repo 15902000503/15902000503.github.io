@@ -18,13 +18,13 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v3
         with:
-          version: 9 # 或者你本地使用的具体版本
+          version: 11.13.1 # 或者你本地使用的具体版本
 
       # 2. 设置 Node 环境，并把缓存改成 pnpm
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
-          cache: "pnpm"
+          node-version: 24
+          #cache: "pnpm"
 
       # 3. 使用 pnpm 安装依赖并构建
       - run: pnpm install
