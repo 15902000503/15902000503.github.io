@@ -10,7 +10,7 @@ import pageRoutes from './modules/pages'
  */
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  scrollBehavior: () => ({ top: 0 }),
+  scrollBehavior: () => ({ left: 0, top: 0 }),
   routes: [
     {
       path: '/',
