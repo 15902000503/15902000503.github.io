@@ -3,7 +3,5 @@ defineOptions({ name: 'App' })
 </script>
 
 <template>
-  <div class="size-full">
-    <RouterView />
-  </div>
+  <RouterView />
 </template>
