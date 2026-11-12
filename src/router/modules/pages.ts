@@ -8,6 +8,12 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/AboutPage.vue'),
     meta: { titleKey: 'menu.about' },
   },
+  {
+    path: '/returns',
+    name: 'ReturnsPolicy',
+    component: () => import('@/views/ReturnsPolicyPage.vue'),
+    meta: { titleKey: 'footer.returns' },
+  },
 ]
 
 export default routes

@@ -28,10 +28,10 @@ const quickLinks = [
 ]
 
 const careLinks = [
-  { label: 'footer.contact' },
-  { label: 'footer.faq' },
-  { label: 'footer.shipping' },
-  { label: 'footer.returns' },
+  { label: 'footer.contact', to: '' },
+  { label: 'footer.faq', to: '' },
+  { label: 'footer.shipping', to: '' },
+  { label: 'footer.returns', to: '/returns' },
 ]
 </script>
 
@@ -82,7 +82,15 @@ const careLinks = [
         </h3>
         <ul class="space-y-2.5 text-sm">
           <li v-for="link in careLinks" :key="link.label">
+            <RouterLink
+              v-if="link.to"
+              :to="link.to"
+              class="text-muted-foreground transition-colors hover:text-primary"
+            >
+              {{ t(link.label) }}
+            </RouterLink>
             <a
+              v-else
               href="#"
               class="text-muted-foreground transition-colors hover:text-primary"
               @click.prevent
