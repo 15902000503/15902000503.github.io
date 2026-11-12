@@ -2,7 +2,7 @@ name: Deploy Vue to GitHub Pages
 
 on:
   push:
-    branches: ["main"] # 确保这是你实际推送的分支
+    branches: ['main'] # 确保这是你实际推送的分支
   workflow_dispatch:
 
 permissions:
@@ -11,7 +11,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: 'pages'
   cancel-in-progress: false
 
 jobs:
@@ -21,19 +21,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # 修改 1：升级 pnpm action 版本，并将 pnpm 版本升级到 10
       - name: Setup pnpm
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 10
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: "pnpm" # 这次因为有了 package.json，缓存不会报错了
+          cache: 'pnpm'
 
+      # 修改 2：增加 --frozen-lockfile 提升 CI 稳定性
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Build project
         run: pnpm run build
@@ -44,7 +46,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "./dist" # Vite 默认打包输出到 dist 目录
+          path: './dist'
 
   deploy:
     environment:
