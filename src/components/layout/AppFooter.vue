@@ -37,14 +37,12 @@ const careLinks = [
 
 <template>
   <footer class="mt-16 border-t bg-muted/40">
-    <div
-      class="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-4"
-    >
+    <div class="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-4">
       <!-- 品牌 -->
       <div class="space-y-4">
         <div class="flex items-center gap-1.5 text-lg font-bold">
           <Sparkles class="size-5 text-primary" />
-          Bagisto Store
+          Stitch Store AI
         </div>
         <p class="text-sm leading-6 text-muted-foreground">
           {{ t('footer.aboutDesc') }}
@@ -53,9 +51,7 @@ const careLinks = [
           <p class="flex items-center gap-2">
             <MapPin class="size-4 shrink-0" /> 123 Commerce Ave, Suite 100
           </p>
-          <p class="flex items-center gap-2">
-            <Phone class="size-4 shrink-0" /> +1 (555) 000-1234
-          </p>
+          <p class="flex items-center gap-2"><Phone class="size-4 shrink-0" /> +1 (555) 000-1234</p>
           <p class="flex items-center gap-2">
             <Mail class="size-4 shrink-0" /> support@bagisto.store
           </p>
@@ -134,7 +130,7 @@ const careLinks = [
       <div
         class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-4 py-4 text-xs text-muted-foreground sm:flex-row sm:px-6"
       >
-        <p>© {{ new Date().getFullYear() }} Bagisto Store. {{ t('footer.rights') }}</p>
+        <p>© {{ new Date().getFullYear() }} Stitch Store AI. {{ t('footer.rights') }}</p>
         <div class="flex gap-4">
           <a href="#" class="hover:text-primary" @click.prevent>{{ t('footer.privacy') }}</a>
           <a href="#" class="hover:text-primary" @click.prevent>{{ t('footer.terms') }}</a>

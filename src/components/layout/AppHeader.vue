@@ -2,23 +2,10 @@
 import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import {
-  Heart,
-  Menu,
-  Search,
-  ShoppingBag,
-  Sparkles,
-  User,
-} from '@lucide/vue'
+import { Heart, Menu, Search, ShoppingBag, Sparkles, User } from '@lucide/vue'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from '@/components/ui/sheet'
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { Badge } from '@/components/ui/badge'
 import { categories } from '@/data/categories'
 import { useLocalized } from '@/composables/useLocalized'
@@ -65,17 +52,10 @@ function isActive(to: string) {
 
     <!-- 主栏 -->
     <div class="border-b bg-background">
-      <div
-        class="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6"
-      >
+      <div class="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6">
         <Sheet v-model:open="mobileOpen">
           <SheetTrigger as-child>
-            <Button
-              variant="ghost"
-              size="icon"
-              class="lg:hidden"
-              :aria-label="t('header.menu')"
-            >
+            <Button variant="ghost" size="icon" class="lg:hidden" :aria-label="t('header.menu')">
               <Menu class="size-5" />
             </Button>
           </SheetTrigger>
@@ -83,7 +63,7 @@ function isActive(to: string) {
             <SheetHeader class="border-b px-4 py-3 text-left">
               <SheetTitle class="flex items-center gap-1.5 text-lg">
                 <Sparkles class="size-5 text-primary" />
-                Bagisto Store
+                Stitch Store AI
               </SheetTitle>
             </SheetHeader>
             <nav class="flex flex-col p-2">
@@ -106,7 +86,7 @@ function isActive(to: string) {
           class="flex shrink-0 items-center gap-1.5 text-xl font-bold tracking-tight"
         >
           <Sparkles class="size-6 text-primary" />
-          <span>Bagisto <span class="text-primary">Store</span></span>
+          <span>Stitch <span class="text-primary">Store</span></span>
         </RouterLink>
 
         <!-- 搜索框 -->

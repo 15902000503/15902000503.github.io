@@ -39,7 +39,7 @@
   },
   "footer": {
     "aboutUs": "关于我们",
-    "aboutDesc": "一个受 Bagisto Commerce 设计启发的现代商城演示站点，基于 Vue、shadcn-vue 与 Tailwind CSS 构建。",
+    "aboutDesc": "一个受 Stitch Commerce 设计启发的现代商城演示站点，基于 Vue、shadcn-vue 与 Tailwind CSS 构建。",
     "quickLinks": "快捷入口",
     "customerCare": "客户服务",
     "newsletter": "订阅资讯",
@@ -142,14 +142,14 @@
     "checkoutToast": "结算为演示功能——不会产生任何扣款。"
   },
   "about": {
-    "title": "关于 Bagisto Store",
+    "title": "关于 Stitch Store AI",
     "heroSubtitle": "我们把精心甄选的食品、服饰与健康好物，带到全世界顾客的身边。",
     "statCustomers": "满意顾客",
     "statProducts": "甄选商品",
     "statCountries": "服务国家",
     "statSupport": "客户支持",
     "storyTitle": "我们的故事",
-    "story1": "Bagisto Store 始于一个简单的想法：网购也应该有温度。我们与独立设计师和可信赖的工坊直接合作，为您带来面料、版型与风格都经得起时间考验的好物。",
+    "story1": "Stitch Store AI 始于一个简单的想法：网购也应该有温度。我们与独立设计师和可信赖的工坊直接合作，为您带来面料、版型与风格都经得起时间考验的好物。",
     "story2": "如今，我们服务着三十多个国家、数万名顾客——免运费、轻松退换，还有随时在线、真正会回复的客服团队。",
     "valuesTitle": "我们坚持的事",
     "value1Title": "顾客至上",

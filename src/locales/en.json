@@ -39,7 +39,7 @@
   },
   "footer": {
     "aboutUs": "About Us",
-    "aboutDesc": "A modern storefront demo built with Vue, shadcn-vue and Tailwind CSS, inspired by the Bagisto Commerce design.",
+    "aboutDesc": "A modern storefront demo built with Vue, shadcn-vue and Tailwind CSS, inspired by the Stitch Commerce design.",
     "quickLinks": "Quick Links",
     "customerCare": "Customer Care",
     "newsletter": "Newsletter",
@@ -142,14 +142,14 @@
     "checkoutToast": "Checkout is a demo — no payment will be charged."
   },
   "about": {
-    "title": "About Bagisto Store",
+    "title": "About Stitch Store AI",
     "heroSubtitle": "We bring carefully curated fashion and wellness essentials to customers around the world.",
     "statCustomers": "Happy Customers",
     "statProducts": "Products Curated",
     "statCountries": "Countries Served",
     "statSupport": "Customer Support",
     "storyTitle": "Our Story",
-    "story1": "Bagisto Store started with a simple idea: online shopping should feel personal. We work directly with independent makers and trusted mills to bring you pieces that last — in fabric, in fit and in style.",
+    "story1": "Stitch Store AI started with a simple idea: online shopping should feel personal. We work directly with independent makers and trusted mills to bring you pieces that last — in fabric, in fit and in style.",
     "story2": "Today we serve tens of thousands of customers across more than thirty countries, with free shipping, easy returns and a support team that actually answers.",
     "valuesTitle": "What We Stand For",
     "value1Title": "Customer First",

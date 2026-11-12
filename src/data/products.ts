@@ -27,7 +27,7 @@ export const products: Product[] = [
     price: 39.99,
     oldPrice: 59.99,
     rating: 4.5,
-    reviewCount: 128,
+    reviewCount: 2368,
     images: [
       img('photo-1596755094514-f87e34085b2c'),
       img('photo-1602810318383-eef946ba2f27'),
@@ -82,7 +82,7 @@ export const products: Product[] = [
     category: 'mens',
     price: 49.0,
     rating: 4.3,
-    reviewCount: 86,
+    reviewCount: 2154,
     images: [
       img('photo-1555529669-e69e7aa0ba9a'),
       img('photo-1473966968820-ac60e9c324bc'),
@@ -126,7 +126,7 @@ export const products: Product[] = [
     price: 159.0,
     oldPrice: 199.0,
     rating: 4.8,
-    reviewCount: 45,
+    reviewCount: 3421,
     images: [
       img('photo-1544022613-e87c8b33b41b'),
       img('photo-1591047139808-ca29a2df926a'),
@@ -170,7 +170,7 @@ export const products: Product[] = [
     price: 45.99,
     oldPrice: 65.0,
     rating: 4.6,
-    reviewCount: 210,
+    reviewCount: 4276,
     images: [
       img('photo-1490481651871-ab68de25d43d'),
       img('photo-1515372039740-b88df843ae11'),
@@ -224,7 +224,7 @@ export const products: Product[] = [
     category: 'women',
     price: 55.0,
     rating: 4.4,
-    reviewCount: 152,
+    reviewCount: 2890,
     images: [
       img('photo-1541099649105-f69ac290fa1f'),
       img('photo-1584785939610-b745e252be26'),
@@ -268,7 +268,7 @@ export const products: Product[] = [
     price: 69.0,
     oldPrice: 89.0,
     rating: 4.7,
-    reviewCount: 64,
+    reviewCount: 2043,
     images: [
       img('photo-1551027719-90bdd172b42e'),
       img('photo-1485469657522-335880d25bc4'),
@@ -311,7 +311,7 @@ export const products: Product[] = [
     category: 'kids',
     price: 24.99,
     rating: 4.9,
-    reviewCount: 98,
+    reviewCount: 3155,
     images: [
       img('photo-1519238203854-03560f2e1d4e'),
       img('photo-1503944583220-79d89ac0e8e9'),
@@ -355,7 +355,7 @@ export const products: Product[] = [
     price: 34.5,
     oldPrice: 45.0,
     rating: 4.5,
-    reviewCount: 73,
+    reviewCount: 2487,
     images: [
       img('photo-1514989943764-eb449d62a661'),
       img('photo-1497035010947-3daebf2592ad'),
@@ -398,7 +398,7 @@ export const products: Product[] = [
     category: 'kids',
     price: 27.0,
     rating: 4.2,
-    reviewCount: 51,
+    reviewCount: 2098,
     images: [
       img('photo-1503919545889-aef636e10793'),
       img('photo-1519238203854-03560f2e1d4e'),
@@ -430,7 +430,7 @@ export const products: Product[] = [
     price: 29.99,
     oldPrice: 39.99,
     rating: 4.6,
-    reviewCount: 302,
+    reviewCount: 4512,
     images: [
       img('photo-1620916566599-457738820c3c'),
       img('photo-1556911220-bff31c812dba'),
@@ -473,7 +473,7 @@ export const products: Product[] = [
     category: 'wellness',
     price: 48.0,
     rating: 4.4,
-    reviewCount: 67,
+    reviewCount: 2231,
     images: [
       img('photo-1592883415431-3f2b412d9a17'),
       img('photo-1506126613408-eca07ce68773'),
@@ -506,7 +506,7 @@ export const products: Product[] = [
     price: 36.0,
     oldPrice: 49.0,
     rating: 4.8,
-    reviewCount: 121,
+    reviewCount: 3689,
     images: [
       img('photo-1602874806546-1b30b2d1f9c8'),
       img('photo-1603909536043-2c9e3e0060a7'),
