@@ -37,19 +37,19 @@ const titleText = computed(() => {
 
   switch (props.status) {
     case '403': {
-      return $t('ui.fallback.forbidden')
+      return $t('fallback.forbidden')
     }
     case '404': {
-      return $t('ui.fallback.pageNotFound')
+      return $t('fallback.pageNotFound')
     }
     case '500': {
-      return $t('ui.fallback.internalError')
+      return $t('fallback.internalError')
     }
     case 'coming-soon': {
-      return $t('ui.fallback.comingSoon')
+      return $t('fallback.comingSoon')
     }
     case 'offline': {
-      return $t('ui.fallback.offlineError')
+      return $t('fallback.offlineError')
     }
     default: {
       return ''
@@ -63,16 +63,16 @@ const descText = computed(() => {
   }
   switch (props.status) {
     case '403': {
-      return $t('ui.fallback.forbiddenDesc')
+      return $t('fallback.forbiddenDesc')
     }
     case '404': {
-      return $t('ui.fallback.pageNotFoundDesc')
+      return $t('fallback.pageNotFoundDesc')
     }
     case '500': {
-      return $t('ui.fallback.internalErrorDesc')
+      return $t('fallback.internalErrorDesc')
     }
     case 'offline': {
-      return $t('ui.fallback.offlineErrorDesc')
+      return $t('fallback.offlineErrorDesc')
     }
     default: {
       return ''
@@ -139,11 +139,11 @@ function refresh() {
       <slot v-if="$slots.action" name="action"></slot>
       <Button v-else-if="showBack" size="lg" @click="back">
         <ArrowLeft class="mr-2 size-4" />
-        {{ $t('common.backToHome') }}
+        {{ $t('button.backToHome') }}
       </Button>
       <Button v-else-if="showRefresh" size="lg" @click="refresh">
         <RotateCw class="mr-2 size-4" />
-        {{ $t('common.refresh') }}
+        {{ $t('button.refresh') }}
       </Button>
     </div>
   </div>
