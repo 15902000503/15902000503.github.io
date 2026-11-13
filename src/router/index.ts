@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import homeRoutes from './modules/home'
 import shopRoutes from './modules/shop'
@@ -9,7 +9,10 @@ import pageRoutes from './modules/pages'
  * 所有前台页面共用 DefaultLayout（页头 / 页脚 / Toast）。
  */
 const router = createRouter({
-  history: createWebHistory(import.meta.env.VITE_BASE),
+  history:
+    import.meta.env.VITE_ROUTER_HISTORY === 'hash'
+      ? createWebHashHistory(import.meta.env.VITE_BASE)
+      : createWebHistory(import.meta.env.VITE_BASE),
   scrollBehavior: (to, _from, savedPosition) => {
     if (savedPosition) {
       return savedPosition
