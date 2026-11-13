@@ -9,22 +9,23 @@ import pageRoutes from './modules/pages'
  * 所有前台页面共用 DefaultLayout（页头 / 页脚 / Toast）。
  */
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  scrollBehavior: () => ({ left: 0, top: 0 }),
+  history: createWebHistory(import.meta.env.VITE_BASE),
+  scrollBehavior: (to, _from, savedPosition) => {
+    if (savedPosition) {
+      return savedPosition
+    }
+    return to.hash ? { behavior: 'smooth', el: to.hash } : { left: 0, top: 0 }
+  },
   routes: [
     {
       path: '/',
       component: DefaultLayout,
-      children: [
-        ...homeRoutes,
-        ...shopRoutes,
-        ...pageRoutes,
-        {
-          path: '/:pathMatch(.*)*',
-          name: 'FallbackNotFound',
-          component: () => import('@/views/_core/fallback/not-found.vue'),
-        },
-      ],
+      children: [...homeRoutes, ...shopRoutes, ...pageRoutes],
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'FallbackNotFound',
+      component: () => import('@/views/_core/fallback/not-found.vue'),
     },
   ],
 })
