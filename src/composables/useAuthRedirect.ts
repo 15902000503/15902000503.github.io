@@ -1,10 +1,31 @@
 /**
  * 登录回跳：记录用户进入 登录/注册/找回密码 页之前所在的页面，
  * 登录成功后回到该页面；带 ?redirect= 查询参数时以其为准。
+ *
+ * 来源记录同时写入 sessionStorage：GitHub 等整页重定向式 OAuth 会重新加载
+ * 应用、丢失模块内存，回来后仍需能跳到原页面。
  */
 const AUTH_ROUTE_NAMES = new Set(['Login', 'Register', 'ForgotPassword'])
+const ORIGIN_KEY = 'auth-o…rigin'
 
-let preAuthPath: string | null = null
+function readStoredOrigin(): string | null {
+  try {
+    return sessionStorage.getItem(ORIGIN_KEY)
+  } catch {
+    return null
+  }
+}
+
+function writeStoredOrigin(path: string | null) {
+  try {
+    if (path) sessionStorage.setItem(ORIGIN_KEY, path)
+    else sessionStorage.removeItem(ORIGIN_KEY)
+  } catch {
+    /* 隐私模式等场景静默降级为仅内存记录 */
+  }
+}
+
+let preAuthPath: string | null = readStoredOrigin()
 
 export function isAuthRoute(name: unknown): boolean {
   return AUTH_ROUTE_NAMES.has(String(name))
@@ -13,11 +34,13 @@ export function isAuthRoute(name: unknown): boolean {
 /** 进入 auth 页前调用：记录来源 fullPath */
 export function recordAuthOrigin(fromFullPath: string) {
   preAuthPath = fromFullPath
+  writeStoredOrigin(fromFullPath)
 }
 
 /** 离开 auth 页时调用：无论是否登录成功都清除来源记录 */
 export function clearAuthOrigin() {
   preAuthPath = null
+  writeStoredOrigin(null)
 }
 
 function isInternalPath(path: string): boolean {
@@ -36,5 +59,6 @@ export function resolveLoginRedirect(queryRedirect: unknown): string {
   }
   const origin = preAuthPath
   preAuthPath = null
+  writeStoredOrigin(null)
   return origin ?? '/'
 }

@@ -303,6 +303,8 @@
     "socialTimeout": "登录窗口长时间未响应，请重试。",
     "googleNotConfigured": "尚未配置 Google 登录，请设置 VITE_GOOGLE_CLIENT_ID 后使用真实 Google 登录。",
     "googleCancelled": "已取消 Google 登录。",
-    "googleFailed": "Google 登录失败：{reason}"
+    "googleFailed": "Google 登录失败：{reason}",
+    "githubCancelled": "已取消 GitHub 登录。",
+    "githubFailed": "GitHub 登录失败：{reason}"
   }
 }

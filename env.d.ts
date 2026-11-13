@@ -9,6 +9,10 @@ interface ImportMetaEnv {
   readonly VITE_FACEBOOK_API_VERSION?: string
   /** Google OAuth2 客户端 ID（Google Cloud Console → 凭据）；留空 = 演示模式 */
   readonly VITE_GOOGLE_CLIENT_ID?: string
+  /** GitHub OAuth App 的 Client ID（可公开）；与换 token 端点都配置后才走真实流程 */
+  readonly VITE_GITHUB_CLIENT_ID?: string
+  /** 本站后端代理端点：POST { code, redirect_uri } → { access_token }（client_secret 只放服务端） */
+  readonly VITE_GITHUB_EXCHANGE_URL?: string
 }
 
 interface ImportMeta {
