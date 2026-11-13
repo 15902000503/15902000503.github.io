@@ -18,6 +18,7 @@ export default defineConfig(async () => {
     },
     vite: {
       server: {
+        port: 7999,
         open: true,
         proxy: createProxy(viteProxyList),
       },
