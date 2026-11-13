@@ -73,10 +73,22 @@
     "promoWomenTitle": "女士臻选",
     "promoWomenSubtitle": "本季最受欢迎的款式",
     "services": {
-      "freeShipping": { "title": "免费配送", "desc": "订单满 $50 即享" },
-      "returns": { "title": "30 天退换", "desc": "无忧换货体验" },
-      "support": { "title": "全天候客服", "desc": "7×24 小时专属服务" },
-      "payment": { "title": "安全支付", "desc": "100% 支付保障" }
+      "freeShipping": {
+        "title": "免费配送",
+        "desc": "订单满 $50 即享"
+      },
+      "returns": {
+        "title": "30 天退换",
+        "desc": "无忧换货体验"
+      },
+      "support": {
+        "title": "全天候客服",
+        "desc": "7×24 小时专属服务"
+      },
+      "payment": {
+        "title": "安全支付",
+        "desc": "100% 支付保障"
+      }
     }
   },
   "products": {
@@ -235,5 +247,62 @@
       "notFound": "未找到, 请求的资源不存在。",
       "internalServerError": "内部服务器错误，请稍后再试。"
     }
+  },
+  "auth": {
+    "loginTitle": "客户登录",
+    "loginSubtitle": "如果您已有账户，请使用邮箱地址登录。",
+    "registerTitle": "注册新用户",
+    "registerSubtitle": "初次光临本店？欢迎注册成为会员。",
+    "forgotTitle": "找回密码",
+    "forgotSubtitle": "如果忘记密码，请输入邮箱地址进行找回。",
+    "email": "邮箱",
+    "emailPlaceholder": "email{'@'}example.com",
+    "password": "密码",
+    "passwordPlaceholder": "密码",
+    "confirmPassword": "确认密码",
+    "firstName": "名",
+    "lastName": "姓",
+    "forgotPassword": "忘记密码？",
+    "signIn": "登录",
+    "register": "注册",
+    "resetPassword": "重置密码",
+    "newCustomer": "新客户？",
+    "createAccount": "创建您的账户",
+    "alreadyAccount": "已有账户？",
+    "backToSignIn": "返回登录？",
+    "subscribeNewsletter": "订阅资讯邮件",
+    "orContinueWith": "或使用以下方式",
+    "showPassword": "显示密码",
+    "hidePassword": "隐藏密码",
+    "signOut": "退出登录",
+    "welcomeBack": "欢迎回来，{name}！",
+    "accountCreated": "账户创建成功，欢迎您，{name}！",
+    "resetLinkSent": "若 {email} 已注册，重置密码的链接已发送至该邮箱。",
+    "socialConnected": "已通过 {provider} 登录。",
+    "signedOut": "您已退出登录。",
+    "validation": {
+      "emailRequired": "请输入邮箱地址。",
+      "emailInvalid": "请输入有效的邮箱地址。",
+      "passwordRequired": "请输入密码。",
+      "passwordMin": "密码至少需要 8 位字符。",
+      "passwordConfirmRequired": "请确认您的密码。",
+      "passwordsMismatch": "两次输入的密码不一致。",
+      "firstNameRequired": "请输入名。",
+      "lastNameRequired": "请输入姓。"
+    },
+    "providers": {
+      "google": "Google",
+      "facebook": "Facebook",
+      "x": "X（推特）",
+      "linkedin": "领英",
+      "github": "GitHub"
+    },
+    "facebookNotConfigured": "尚未配置 Facebook 登录，请设置 VITE_FACEBOOK_APP_ID 后使用真实 Meta 登录。",
+    "facebookCancelled": "已取消 Facebook 登录。",
+    "facebookFailed": "Facebook 登录失败：{reason}",
+    "socialTimeout": "登录窗口长时间未响应，请重试。",
+    "googleNotConfigured": "尚未配置 Google 登录，请设置 VITE_GOOGLE_CLIENT_ID 后使用真实 Google 登录。",
+    "googleCancelled": "已取消 Google 登录。",
+    "googleFailed": "Google 登录失败：{reason}"
   }
 }

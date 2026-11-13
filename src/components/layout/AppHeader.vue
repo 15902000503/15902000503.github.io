@@ -3,13 +3,23 @@ import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { Heart, Menu, Search, ShoppingBag, Sparkles, User } from '@lucide/vue'
+import { toast } from 'vue-sonner'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import { Badge } from '@/components/ui/badge'
 import { categories } from '@/data/categories'
 import { useLocalized } from '@/composables/useLocalized'
 import { useCartStore } from '@/stores/cart'
+import { useAuthStore } from '@/stores/auth'
 import LanguageSwitch from './LanguageSwitch.vue'
 
 const { t } = useI18n()
@@ -17,6 +27,7 @@ const { pick } = useLocalized()
 const route = useRoute()
 const router = useRouter()
 const cart = useCartStore()
+const auth = useAuthStore()
 
 const keyword = ref('')
 const mobileOpen = ref(false)
@@ -38,6 +49,11 @@ function search() {
 
 function isActive(to: string) {
   return route.fullPath === to
+}
+
+function signOut() {
+  auth.signOut()
+  toast.success(t('auth.signedOut'))
 }
 </script>
 
@@ -114,9 +130,29 @@ function isActive(to: string) {
 
         <div class="ml-auto flex items-center gap-1">
           <LanguageSwitch />
-          <Button variant="ghost" size="icon" :title="t('header.account')">
-            <User class="size-5" />
-          </Button>
+          <DropdownMenu v-if="auth.isLoggedIn">
+            <DropdownMenuTrigger as-child>
+              <Button variant="ghost" size="icon" :title="t('header.account')">
+                <User class="size-5" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" class="w-56">
+              <DropdownMenuLabel>{{ auth.user?.name }}</DropdownMenuLabel>
+              <div class="px-2 pb-2 text-xs text-muted-foreground">
+                {{ auth.user?.email }}
+              </div>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem @click="signOut">
+                <User class="size-4" />
+                {{ t('auth.signOut') }}
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <RouterLink v-else to="/login">
+            <Button variant="ghost" size="icon" :title="t('header.login')">
+              <User class="size-5" />
+            </Button>
+          </RouterLink>
           <Button
             variant="ghost"
             size="icon"

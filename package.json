@@ -15,6 +15,7 @@
     "format": "oxfmt src/"
   },
   "dependencies": {
+    "@healerlab/vue3-facebook-login": "^0.1.7",
     "@lucide/vue": "^1.70.0",
     "@tailwindcss/vite": "^4.3.5",
     "@vee-validate/zod": "^4.15.1",
@@ -31,6 +32,7 @@
     "vue-i18n": "^11.4.18",
     "vue-router": "^5.3.1",
     "vue-sonner": "^2.0.9",
+    "vue3-google-login": "^2.1.4",
     "zod": "3.25.76"
   },
   "devDependencies": {

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import AppHeader from '@/components/layout/AppHeader.vue'
 import AppFooter from '@/components/layout/AppFooter.vue'
-import { Toaster } from '@/components/ui/sonner'
 </script>
 
 <template>
@@ -11,6 +10,5 @@ import { Toaster } from '@/components/ui/sonner'
       <RouterView />
     </main>
     <AppFooter />
-    <Toaster position="top-right" />
   </div>
 </template>

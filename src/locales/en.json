@@ -73,10 +73,22 @@
     "promoWomenTitle": "Women's Edit",
     "promoWomenSubtitle": "The season's most-loved styles",
     "services": {
-      "freeShipping": { "title": "Free Shipping", "desc": "On orders over $50" },
-      "returns": { "title": "30-Day Returns", "desc": "Hassle-free exchanges" },
-      "support": { "title": "24/7 Support", "desc": "Dedicated customer care" },
-      "payment": { "title": "Secure Payment", "desc": "100% protected checkout" }
+      "freeShipping": {
+        "title": "Free Shipping",
+        "desc": "On orders over $50"
+      },
+      "returns": {
+        "title": "30-Day Returns",
+        "desc": "Hassle-free exchanges"
+      },
+      "support": {
+        "title": "24/7 Support",
+        "desc": "Dedicated customer care"
+      },
+      "payment": {
+        "title": "Secure Payment",
+        "desc": "100% protected checkout"
+      }
     }
   },
   "products": {
@@ -235,5 +247,62 @@
       "notFound": "Not Found. The requested resource could not be found.",
       "internalServerError": "Internal Server Error. Something went wrong on our end. Please try again later."
     }
+  },
+  "auth": {
+    "loginTitle": "Customer Login",
+    "loginSubtitle": "If you have an account, sign in with your email address.",
+    "registerTitle": "Become User",
+    "registerSubtitle": "If you are new to our store, we glad to have you as member.",
+    "forgotTitle": "Recover Password",
+    "forgotSubtitle": "If you forgot your password, recover it by entering your email address.",
+    "email": "Email",
+    "emailPlaceholder": "email{'@'}example.com",
+    "password": "Password",
+    "passwordPlaceholder": "Password",
+    "confirmPassword": "Confirm Password",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "forgotPassword": "Forgot Password?",
+    "signIn": "Sign In",
+    "register": "Register",
+    "resetPassword": "Reset Password",
+    "newCustomer": "New customer?",
+    "createAccount": "Create your account",
+    "alreadyAccount": "Already have an account?",
+    "backToSignIn": "Back to sign in?",
+    "subscribeNewsletter": "Subscribe to newsletter",
+    "orContinueWith": "Or continue with",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "signOut": "Sign Out",
+    "welcomeBack": "Welcome back, {name}!",
+    "accountCreated": "Account created. Welcome, {name}!",
+    "resetLinkSent": "If an account exists for {email}, a password reset link has been sent.",
+    "socialConnected": "Signed in with {provider}.",
+    "signedOut": "You have been signed out.",
+    "validation": {
+      "emailRequired": "Email is required.",
+      "emailInvalid": "Please enter a valid email address.",
+      "passwordRequired": "Password is required.",
+      "passwordMin": "Password must be at least 8 characters.",
+      "passwordConfirmRequired": "Please confirm your password.",
+      "passwordsMismatch": "Passwords do not match.",
+      "firstNameRequired": "First name is required.",
+      "lastNameRequired": "Last name is required."
+    },
+    "providers": {
+      "google": "Google",
+      "facebook": "Facebook",
+      "x": "X (Twitter)",
+      "linkedin": "LinkedIn",
+      "github": "GitHub"
+    },
+    "facebookNotConfigured": "Facebook login is not configured. Set VITE_FACEBOOK_APP_ID to enable real Meta login.",
+    "facebookCancelled": "Facebook login was cancelled.",
+    "facebookFailed": "Facebook login failed: {reason}",
+    "socialTimeout": "The login window did not respond in time. Please try again.",
+    "googleNotConfigured": "Google login is not configured. Set VITE_GOOGLE_CLIENT_ID to enable real Google sign-in.",
+    "googleCancelled": "Google login was cancelled.",
+    "googleFailed": "Google login failed: {reason}"
   }
 }
