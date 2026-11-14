@@ -179,8 +179,7 @@ export function useSocialLogin(onSuccess: () => void) {
       provider: 'github',
       options: {
         scopes: 'read:user user:email', // 请求读取用户资料和邮箱
-        redirectTo: window.location.origin + '/'
-        //redirectTo: window.location.origin + router.resolve(target).href,
+        redirectTo: window.location.origin + router.resolve(target).href,
       },
     })
     if (error) {

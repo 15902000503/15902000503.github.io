@@ -2,6 +2,7 @@
 import { onMounted } from 'vue'
 import { supabase } from '@/lib/supabase'
 import { useAuthStore } from '@/stores/auth'
+import { nextTick } from 'process'
 
 const auth = useAuthStore()
 async function setGithub(user: any) {
@@ -28,15 +29,18 @@ onMounted(async () => {
     const {
       data: { session },
     } = await supabase.auth.getSession()
-    //window.history.replaceState(null, '', cleanUrl)
+    window.history.replaceState(null, '', cleanUrl)
     if (session) {
       console.log('登录成功，用户信息：', session)
       const user = session.user;
       setGithub(user);
     } else {
-      const data = await supabase.auth.getUser();
-      console.log('登录成功，用户信息：', data)
-      setGithub(data);
+      nextTick(() => {
+        supabase.auth.getUser().then(res => {
+          console.log('登录成功，用户信息：', res)
+          setGithub(res);
+        });
+      })
     }
   }
 })
