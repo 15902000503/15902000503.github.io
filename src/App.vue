@@ -6,24 +6,12 @@ import { useAuthStore } from '@/stores/auth'
 const auth = useAuthStore()
 async function setGithub(user: Record<string, any>) {
   if (!user) return
-  if (user.app_metadata?.provider !== 'github') return
-
-  const ghIdentity =
-    user.identities?.find((item: any) => item.provider === 'github')?.identity_data ?? {}
-  const meta = { ...ghIdentity, ...user.user_metadata }
-
+  const meta = { ...user.user_metadata }
   console.log('登录成功，用户信息：', user.user_metadata)
 
   await auth.signInWithProfile({
-    name:
-      meta.full_name ??
-      meta.user_name ??
-      meta.preferred_username ??
-      `GitHub User ${user.id.slice(0, 6)}`,
-    email:
-      user.email ??
-      meta.email ??
-      `${meta.user_name ?? `gh-${user.id.slice(0, 6)}`}@users.noreply.github.com`,
+    name: meta.user_name,
+    email: meta.email,
     provider: 'github',
   })
 }
@@ -47,8 +35,7 @@ onMounted(async () => {
       setGithub(user);
     } else {
       const { data, error } = await supabase.auth.getUser()
-      const user: any = data.user
-      setGithub(user);
+      setGithub(data);
     }
   }
 })
