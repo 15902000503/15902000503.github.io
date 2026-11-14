@@ -155,13 +155,13 @@ export function useSocialLogin(onSuccess: () => void) {
       typeof error === 'string'
         ? error
         : [
-            (error as Error)?.message,
-            (error as { error_description?: string })?.error_description,
-            (error as { error?: string })?.error,
-            (error as { type?: string })?.type,
-          ]
-            .filter(Boolean)
-            .join(' ')
+          (error as Error)?.message,
+          (error as { error_description?: string })?.error_description,
+          (error as { error?: string })?.error,
+          (error as { type?: string })?.type,
+        ]
+          .filter(Boolean)
+          .join(' ')
     if (/cancel|closed|denied/i.test(text)) {
       toast.info(t('auth.googleCancelled'))
       return
@@ -179,7 +179,8 @@ export function useSocialLogin(onSuccess: () => void) {
       provider: 'github',
       options: {
         scopes: 'read:user user:email', // 请求读取用户资料和邮箱
-        redirectTo: window.location.origin + router.resolve(target).href,
+        redirectTo: window.location.origin + '/'
+        //redirectTo: window.location.origin + router.resolve(target).href,
       },
     })
     if (error) {
