@@ -1,8 +1,7 @@
 <script lang="ts" setup>
-import { onMounted } from 'vue'
+import { onMounted, nextTick } from 'vue'
 import { supabase } from '@/lib/supabase'
 import { useAuthStore } from '@/stores/auth'
-import { nextTick } from 'process'
 
 const auth = useAuthStore()
 async function setGithub(user: any) {
