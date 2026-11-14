@@ -49,16 +49,31 @@ function isInternalPath(path: string): boolean {
   return path.startsWith('/') && !path.startsWith('//') && !path.startsWith('/\\')
 }
 
+/** 与 resolveLoginRedirect 相同的优先级，但不消费来源记录 */
+function pickLoginPath(queryRedirect: unknown): string {
+  if (typeof queryRedirect === 'string' && isInternalPath(queryRedirect)) {
+    return queryRedirect
+  }
+  return preAuthPath ?? '/'
+}
+
+/**
+ * 整页跳转式 OAuth（GitHub）发起前取回跳目标：
+ * 与 Google/Facebook 成功后 resolveLoginRedirect 的解析完全一致
+ * （?redirect= 查询参数 > 来源页面 > 首页），但只读不消费——
+ * 跳转回来后 sessionStorage 仍保留来源记录，授权被取消时重试还能回原页。
+ */
+export function peekLoginRedirect(queryRedirect: unknown): string {
+  return pickLoginPath(queryRedirect)
+}
+
 /**
  * 解析登录/注册成功后的跳转目标：
  * ?redirect= 查询参数 > 来源页面 > 首页。
  */
 export function resolveLoginRedirect(queryRedirect: unknown): string {
-  if (typeof queryRedirect === 'string' && isInternalPath(queryRedirect)) {
-    return queryRedirect
-  }
-  const origin = preAuthPath
+  const target = pickLoginPath(queryRedirect)
   preAuthPath = null
   writeStoredOrigin(null)
-  return origin ?? '/'
+  return target
 }

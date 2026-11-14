@@ -1,9 +1,11 @@
 import { onUnmounted, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { toast } from 'vue-sonner'
 import { googleTokenLogin } from 'vue3-google-login'
 import { supabase } from '@/lib/supabase'
 import { providerLabelKey, type SocialProviderId } from '@/components/business/social/providers'
+import { peekLoginRedirect } from '@/composables/useAuthRedirect'
 import { useAuthStore } from '@/stores/auth'
 
 /**
@@ -13,7 +15,9 @@ import { useAuthStore } from '@/stores/auth'
  * - google：由 vue3-google-login 驱动（googleTokenLogin 弹窗取 access_token，
  *   再调 Google userinfo 端点取真实资料），无需全局注册插件，clientId 按调用传入；
  * - github：由 Supabase auth.signInWithOAuth 整页跳转发起授权，回调会话由
- *   supabase-js 自动消费；
+ *   supabase-js 自动消费；回跳目标与 Google/Facebook 一致，按
+ *   peekLoginRedirect 解析（?redirect= > 来源页面 > 首页，来源记录经
+ *   sessionStorage 跨整页重定向存活）；
  * - 其余 provider：演示 mock（后续可按同样模式接入各家 OAuth）。
  */
 
@@ -37,6 +41,8 @@ const SOCIAL_WATCHDOG_MS = 120_000
 
 export function useSocialLogin(onSuccess: () => void) {
   const { t } = useI18n()
+  const router = useRouter()
+  const route = useRoute()
   const auth = useAuthStore()
   const socialLoading = ref<SocialProviderId | null>(null)
 
@@ -160,14 +166,15 @@ export function useSocialLogin(onSuccess: () => void) {
     toast.error(t('auth.googleFailed', { reason: text || 'unknown error' }))
   }
 
-  /** GitHub：通过 Supabase 发起 OAuth 授权（整页跳转，成功后回到站点根地址） */
+  /** GitHub：通过 Supabase 发起 OAuth 授权（整页跳转，成功后回到来源路由） */
   async function loginWithGithub() {
+    // 回跳目标与 Google/Facebook 成功后 goAfterLogin 的解析保持一致：
+    // ?redirect= 查询参数 > 进入登录页前的来源路由 > 首页。
+    // router.resolve 兼容 hash / history 两种路由模式。
+    const target = peekLoginRedirect(route.query.redirect)
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'github',
-      options: {
-        // 登录成功后跳转回本站 GitHub Pages 页面（用户站点仓库，位于根路径）
-        redirectTo: window.location.origin,
-      },
+      options: { redirectTo: window.location.origin + router.resolve(target).href },
     })
     if (error) console.error('登录失败:', error.message)
   }
