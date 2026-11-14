@@ -28,7 +28,7 @@ onMounted(async () => {
     const {
       data: { session },
     } = await supabase.auth.getSession()
-    window.history.replaceState(null, '', cleanUrl)
+    //window.history.replaceState(null, '', cleanUrl)
     if (session) {
       console.log('登录成功，用户信息：', session)
       const user = session.user;
