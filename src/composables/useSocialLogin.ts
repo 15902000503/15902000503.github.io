@@ -174,7 +174,10 @@ export function useSocialLogin(onSuccess: () => void) {
     const target = peekLoginRedirect(route.query.redirect)
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'github',
-      options: { redirectTo: window.location.origin + router.resolve(target).href },
+      options: {
+        scopes: 'read:user user:email', // 请求读取用户资料和邮箱
+        redirectTo: window.location.origin + router.resolve(target).href,
+      },
     })
     if (error) console.error('登录失败:', error.message)
   }
