@@ -2,7 +2,7 @@ import { onUnmounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { toast } from 'vue-sonner'
 import { googleTokenLogin } from 'vue3-google-login'
-import { GithubLoginError, beginGithubLogin } from '@/lib/github'
+import { supabase } from '@/lib/supabase'
 import { providerLabelKey, type SocialProviderId } from '@/components/business/social/providers'
 import { useAuthStore } from '@/stores/auth'
 
@@ -12,9 +12,8 @@ import { useAuthStore } from '@/stores/auth'
  *   结果经组件事件回流到 handleFacebookSuccess / handleFacebookFailure；
  * - google：由 vue3-google-login 驱动（googleTokenLogin 弹窗取 access_token，
  *   再调 Google userinfo 端点取真实资料），无需全局注册插件，clientId 按调用传入；
- * - github：GitHub 官方仅支持授权码流（无前端弹窗 SDK，换 token 必须带
- *   client_secret），由 @/lib/github 整页跳转发起授权，回调在 App.vue 启动时
- *   消费：后端代理换 token → api.github.com 取资料 → 写登录态并回跳来源页；
+ * - github：由 Supabase auth.signInWithOAuth 整页跳转发起授权，回调会话由
+ *   supabase-js 自动消费；
  * - 其余 provider：演示 mock（后续可按同样模式接入各家 OAuth）。
  */
 
@@ -81,16 +80,11 @@ export function useSocialLogin(onSuccess: () => void) {
       void loginWithGoogle()
       return
     }
-     if (provider === 'github') {
-       // 整页跳转流程：配置齐全时本页随即卸载，无需 loading / 看门狗；
-       // 未配置时抛错并明确提示（不假成功）
-       try {
-         beginGithubLogin()
-       } catch (error) {
-         notifyGithubError(error)
-       }
-       return
-     }
+    if (provider === 'github') {
+      // 整页跳转流程：授权成功时本页随即卸载，无需 loading / 看门狗
+      void loginWithGithub()
+      return
+    }
     // 其余 provider：演示 mock
     void (async () => {
       socialLoading.value = provider
@@ -166,15 +160,16 @@ export function useSocialLogin(onSuccess: () => void) {
     toast.error(t('auth.googleFailed', { reason: text || 'unknown error' }))
   }
 
-  function notifyGithubError(error: unknown) {
-    // HMR 后 instanceof 可能跨模块实例失效，按 kind 字段分类
-    const kind = (error as GithubLoginError)?.kind
-    if (kind === 'not-configured') {
-       // 配置类信息不打扰用户：仅控制台记录，不在页面弹提示
-       console.warn('[social-login] github not configured:', (error as Error)?.message)
-      return
-    }
-    toast.error(t('auth.githubFailed', { reason: String((error as Error)?.message ?? error) }))
+  /** GitHub：通过 Supabase 发起 OAuth 授权（整页跳转，成功后回到站点根地址） */
+  async function loginWithGithub() {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'github',
+      options: {
+        // 登录成功后跳转回本站 GitHub Pages 页面（用户站点仓库，位于根路径）
+        redirectTo: window.location.origin,
+      },
+    })
+    if (error) console.error('登录失败:', error.message)
   }
 
   function handleFacebookSuccess(raw: unknown) {
