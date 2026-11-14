@@ -33,11 +33,14 @@ async function syncProfileFromSupabase(notify: boolean) {
       identities: user?.identities,
     })
     if (!user) return
+    // 仅 GitHub OAuth 会话才写入 auth store（provider 由 Supabase 服务端标记），
+    // 避免将来其它方式（如 Supabase 邮箱登录）建立的会话被误标为 github
+    if (user.app_metadata?.provider !== 'github') return
     // GitHub 资料可能同时出现在 user_metadata 与 identities[].identity_data，
     // 两处合并取用（user_metadata 优先）
     const ghIdentity =
       user.identities?.find((item) => item.provider === 'github')?.identity_data ?? {}
-    const meta = { ...ghIdentity, ...(user.user_metadata ?? {}) }
+    const meta = { ...ghIdentity, ...user.user_metadata }
     await auth.signInWithProfile({
       name:
         meta.full_name ??

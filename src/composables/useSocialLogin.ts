@@ -87,7 +87,10 @@ export function useSocialLogin(onSuccess: () => void) {
       return
     }
     if (provider === 'github') {
-      // 整页跳转流程：授权成功时本页随即卸载，无需 loading / 看门狗
+      // 整页跳转流程：发起成功后本页随即卸载，loading 保持到跳转发生；
+      // 发起失败或超时则恢复按钮
+      socialLoading.value = 'github'
+      startWatchdog()
       void loginWithGithub()
       return
     }
@@ -179,7 +182,12 @@ export function useSocialLogin(onSuccess: () => void) {
         redirectTo: window.location.origin + router.resolve(target).href,
       },
     })
-    if (error) console.error('登录失败:', error.message)
+    if (error) {
+      // 发起失败：本页不会跳转，恢复按钮并明确报错（不假成功）
+      finishSocial()
+      console.error('登录失败:', error.message)
+      toast.error(t('auth.githubFailed', { reason: error.message }))
+    }
   }
 
   function handleFacebookSuccess(raw: unknown) {

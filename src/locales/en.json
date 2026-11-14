@@ -303,6 +303,7 @@
     "socialTimeout": "The login window did not respond in time. Please try again.",
     "googleNotConfigured": "Google login is not configured. Set VITE_GOOGLE_CLIENT_ID to enable real Google sign-in.",
     "googleCancelled": "Google login was cancelled.",
-    "googleFailed": "Google login failed: {reason}"
+    "googleFailed": "Google login failed: {reason}",
+    "githubFailed": "GitHub login failed: {reason}"
   }
 }
