@@ -51,9 +51,14 @@ function isActive(to: string) {
   return route.fullPath === to
 }
 
-function signOut() {
-  auth.signOut()
-  toast.success(t('auth.signedOut'))
+async function signOut() {
+  try {
+    await auth.signOut()
+    toast.success(t('auth.signedOut'))
+  } catch (error) {
+    console.error('[auth] sign out failed', error)
+    toast.error(String((error as Error)?.message ?? error))
+  }
 }
 </script>
 

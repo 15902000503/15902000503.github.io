@@ -3,16 +3,23 @@ import { defineStore } from 'pinia'
 import type { SocialProviderId } from '@/components/business/social/providers'
 import { supabase } from '@/lib/supabase'
 
-/** 尽力清理 Supabase 会话（GitHub 登录态存于此，无会话时静默跳过）。
- * 不清的话刷新后 onAuthStateChange 会用残留会话把用户自动登录回来 */
-function bestEffortSupabaseLogout() {
+/** 清除 Supabase 会话；全局注销失败时至少移除当前浏览器的 session。 */
+async function signOutSupabase() {
+  let logoutError: unknown
   try {
-    void supabase.auth.signOut().catch(() => {
-      /* 无会话等错误不影响本地登出 */
-    })
-  } catch {
-    /* SDK 异常时忽略 */
+    const { error } = await supabase.auth.signOut()
+    if (!error) return
+    logoutError = error
+  } catch (error) {
+    logoutError = error
   }
+
+  try {
+    await supabase.auth.signOut({ scope: 'local' })
+  } catch {
+    // Preserve the original global sign-out error for the caller.
+  }
+  throw logoutError
 }
 
 /** 尽力清理 Facebook 会话（SDK 由 vue3-facebook-login 注入，未加载时静默跳过） */
@@ -107,13 +114,24 @@ export const useAuthStore = defineStore('auth', () => {
     persist()
   }
 
-  function signOut() {
+  async function signOut() {
+    let logoutError: unknown
+
     // 经 Facebook 登录时同步清理 FB 会话
     if (user.value?.provider === 'facebook') bestEffortFacebookLogout()
     // 经 GitHub（Supabase）登录时同步清理 Supabase 会话
-    if (user.value?.provider === 'github') bestEffortSupabaseLogout()
+    if (user.value?.provider === 'github') {
+      try {
+        await signOutSupabase()
+      } catch (error) {
+        logoutError = error
+      }
+    }
+
     user.value = null
     persist()
+
+    if (logoutError) throw logoutError
   }
 
   return {
