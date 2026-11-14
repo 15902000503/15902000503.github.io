@@ -12,7 +12,7 @@ importers:
         specifier: ^0.1.7
         version: 0.1.7(vue@3.5.45(typescript@6.0.3))
       '@lucide/vue':
-        specifier: ^1.70.0
+        specifier: ^1.72.0
         version: 1.72.0(vue@3.5.45(typescript@6.0.3))
       '@supabase/supabase-js':
         specifier: ^2.119.0
