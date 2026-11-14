@@ -27,13 +27,15 @@ onMounted(async () => {
     const {
       data: { session },
     } = await supabase.auth.getSession()
-    window.history.replaceState(null, '', cleanUrl)
+    //window.history.replaceState(null, '', cleanUrl)
     if (session) {
+      console.log('用户信息', session);
       const user = session.user;
       setGithub(user);
     } else {
       nextTick(() => {
         supabase.auth.getUser().then(res => {
+          console.log('用户信息', res);
           setGithub(res);
         });
       })
