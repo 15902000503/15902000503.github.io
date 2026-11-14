@@ -8,8 +8,6 @@ const auth = useAuthStore()
 async function setGithub(user: any) {
   if (!user) return
   const meta = { ...user.user_metadata }
-  console.log('登录成功，用户信息：', user.user_metadata)
-
   await auth.signInWithProfile({
     name: meta.user_name,
     email: meta.email,
@@ -31,13 +29,11 @@ onMounted(async () => {
     } = await supabase.auth.getSession()
     window.history.replaceState(null, '', cleanUrl)
     if (session) {
-      console.log('登录成功，用户信息：', session)
       const user = session.user;
       setGithub(user);
     } else {
       nextTick(() => {
         supabase.auth.getUser().then(res => {
-          console.log('登录成功，用户信息：', res)
           setGithub(res);
         });
       })
