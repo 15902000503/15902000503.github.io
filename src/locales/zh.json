@@ -129,6 +129,7 @@
     "relatedTitle": "你可能还喜欢",
     "addedToCart": "已将「{name}」加入购物车",
     "selectSize": "请选择尺码",
+    "invalidQuantity": "请输入不小于 1 的整数数量",
     "writeReview": "撰写评价",
     "reviewer": "已验证购买",
     "notFound": "未找到该商品"

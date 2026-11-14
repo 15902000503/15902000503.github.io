@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { Check, Globe } from '@lucide/vue'
 import { Button } from '@/components/ui/button'
@@ -13,15 +13,25 @@ import {
 const { locale } = useI18n()
 
 const languages = [
-  { code: 'en', label: 'English' },
-  { code: 'zh', label: '简体中文' },
+  { code: 'en', label: 'English', short: 'EN' },
+  { code: 'zh', label: '简体中文', short: '中文' },
+  { code: 'ja', label: '日本語', short: '日本語' },
+  { code: 'ko', label: '한국어', short: '한국어' },
+  { code: 'fr', label: 'Français', short: 'FR' },
 ] as const
 
 const open = ref(false)
+const activeLanguage = computed(
+  () => languages.find((language) => language.code === locale.value)?.short ?? 'EN',
+)
 
-function switchTo(code: 'en' | 'zh') {
+function switchTo(code: (typeof languages)[number]['code']) {
+  try {
+    localStorage.setItem('locale', code)
+  } catch {
+    // Keep language switching available when browser storage is disabled.
+  }
   locale.value = code
-  localStorage.setItem('locale', code)
 }
 </script>
 
@@ -31,7 +41,7 @@ function switchTo(code: 'en' | 'zh') {
       <Button variant="ghost" size="sm" class="gap-1.5">
         <Globe class="size-4" />
         <span class="hidden text-sm sm:inline">
-          {{ locale === 'zh' ? '中文' : 'EN' }}
+          {{ activeLanguage }}
         </span>
       </Button>
     </DropdownMenuTrigger>

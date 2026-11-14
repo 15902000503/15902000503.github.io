@@ -48,7 +48,7 @@ watch(product, (p) => {
   selectedColor.value = p?.colors[0]?.name
   selectedSize.value = undefined
   qty.value = 1
-})
+}, { immediate: true })
 
 const discount = computed(() => {
   const p = product.value
@@ -60,6 +60,14 @@ const discount = computed(() => {
 function validate(): boolean {
   const p = product.value
   if (!p) return false
+  if (!p.inStock) {
+    toast.error(t('common.outOfStock'))
+    return false
+  }
+  if (!Number.isSafeInteger(qty.value) || qty.value < 1) {
+    toast.error(t('detail.invalidQuantity'))
+    return false
+  }
   if (p.sizes.length && !selectedSize.value) {
     toast.error(t('detail.selectSize'))
     return false
@@ -67,9 +75,9 @@ function validate(): boolean {
   return true
 }
 
-function addToCart() {
+function addToCart(): boolean {
   const p = product.value
-  if (!p || !validate()) return
+  if (!p || !validate()) return false
   cart.addItem(
     {
       productId: p.id,
@@ -82,11 +90,11 @@ function addToCart() {
     qty.value,
   )
   toast.success(t('detail.addedToCart', { name: pick(p.name) }))
+  return true
 }
 
 function buyNow() {
-  addToCart()
-  if (validate()) router.push('/cart')
+  if (addToCart()) router.push('/cart')
 }
 </script>
 

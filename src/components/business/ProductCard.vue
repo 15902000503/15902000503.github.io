@@ -28,6 +28,10 @@ const discount = computed(() =>
 )
 
 function addToCart() {
+  if (!props.product.inStock) {
+    toast.error(t('common.outOfStock'))
+    return
+  }
   cart.addItem(
     {
       productId: props.product.id,
@@ -114,7 +118,8 @@ function addToCart() {
           size="icon"
           variant="outline"
           class="size-8 rounded-full opacity-100 transition-opacity lg:opacity-0 lg:group-hover:opacity-100 focus-visible:opacity-100"
-          :title="t('detail.addToCart')"
+          :disabled="!product.inStock"
+          :title="t(product.inStock ? 'detail.addToCart' : 'common.outOfStock')"
           @click="addToCart"
         >
           <ShoppingBag class="size-4" />

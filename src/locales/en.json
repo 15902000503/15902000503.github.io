@@ -129,6 +129,7 @@
     "relatedTitle": "You May Also Like",
     "addedToCart": "{name} added to cart",
     "selectSize": "Please select a size",
+    "invalidQuantity": "Please enter a whole quantity of at least 1",
     "writeReview": "Write a review",
     "reviewer": "Verified buyer",
     "notFound": "Product not found"

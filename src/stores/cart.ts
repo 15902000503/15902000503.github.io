@@ -21,12 +21,17 @@ export const useCartStore = defineStore('cart', () => {
   )
 
   function addItem(item: Omit<CartItem, 'qty'>, qty = 1) {
+    if (!Number.isSafeInteger(qty) || qty < 1) return
+
     const key = `${item.productId}-${item.color ?? ''}-${item.size ?? ''}`
     const found = items.value.find(
       (i) =>
         `${i.productId}-${i.color ?? ''}-${i.size ?? ''}` === key,
     )
-    if (found) found.qty += qty
+    if (found) {
+      const nextQty = found.qty + qty
+      if (Number.isSafeInteger(nextQty)) found.qty = nextQty
+    }
     else items.value.push({ ...item, qty })
   }
 

@@ -27,7 +27,12 @@ const compile = (src) => {
 let total = 0
 let fail = 0
 
-for (const file of ['src/locales/en.json', 'src/locales/zh.json']) {
+const localeFiles = fs
+  .readdirSync('src/locales')
+  .filter((file) => file.endsWith('.json'))
+  .map((file) => nodePath.join('src/locales', file))
+
+for (const file of localeFiles) {
   const msgs = JSON.parse(fs.readFileSync(file, 'utf-8'))
   const walk = (obj, path) => {
     for (const [k, v] of Object.entries(obj)) {

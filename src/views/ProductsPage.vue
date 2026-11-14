@@ -54,9 +54,11 @@ watch(
 watch(
   () => [filters.category, filters.badge] as const,
   ([category, badge]) => {
-    const query: Record<string, string> = {}
+    const query = { ...route.query }
     if (category) query.category = category
+    else delete query.category
     if (badge) query.badge = badge
+    else delete query.badge
     if (
       String(route.query.category ?? '') !== category ||
       String(route.query.badge ?? '') !== badge
