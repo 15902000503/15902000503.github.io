@@ -1,6 +1,20 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { SocialProviderId } from '@/components/business/social/providers'
+import { supabase } from '@/lib/supabase'
+
+/** 尽力清理 Supabase 会话（GitHub 登录态存于此；无会话或失败时静默跳过）。
+ * 不清的话应用启动时 getSession 会把用户自动重新登录回来 */
+function bestEffortSupabaseLogout() {
+  try {
+    void supabase.auth.signOut().catch(() => {
+      /* 无会话等错误不影响本地登出 */
+    })
+  } catch {
+    /* SDK 异常时忽略 */
+  }
+}
+
 /** 尽力清理 Facebook 会话（SDK 由 vue3-facebook-login 注入，未加载时静默跳过） */
 function bestEffortFacebookLogout() {
   try {
@@ -96,6 +110,8 @@ export const useAuthStore = defineStore('auth', () => {
   function signOut() {
     // 经 Facebook 登录时同步清理 FB 会话
     if (user.value?.provider === 'facebook') bestEffortFacebookLogout()
+    // 经 GitHub（Supabase）登录时同步清理 Supabase 会话
+    if (user.value?.provider === 'github') bestEffortSupabaseLogout()
     user.value = null
     persist()
   }
