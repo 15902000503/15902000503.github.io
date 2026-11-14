@@ -14,13 +14,11 @@ onMounted(async () => {
     const cleanHash = fullHash.split('#access_token')[0]
     const cleanUrl =
       window.location.origin + window.location.pathname + window.location.search + cleanHash
-    window.history.replaceState(null, '', cleanUrl)
-    console.log('登录成功，用户信息：', cleanUrl)
-    // 3. 获取用户信息（此时 Supabase 已经处理好了 Token）
+
     const {
       data: { session },
     } = await supabase.auth.getSession()
-
+    window.history.replaceState(null, '', cleanUrl)
     if (session) {
       console.log('登录成功，用户信息：', session)
       const user = session.user
