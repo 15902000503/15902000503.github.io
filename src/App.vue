@@ -22,23 +22,14 @@ onMounted(async () => {
     const cleanHash = fullHash.split('#access_token')[0]
     const cleanUrl =
       window.location.origin + window.location.pathname + window.location.search + cleanHash
-
-    const {
-      data: { session },
-    } = await supabase.auth.getSession()
-    //window.history.replaceState(null, '', cleanUrl)
-    if (session) {
-      console.log('用户信息', session);
-      const user = session.user;
-      setGithub(user);
-    } else {
-      nextTick(() => {
-        supabase.auth.getUser().then(res => {
-          console.log('用户信息', res);
-          setGithub(res);
-        });
-      })
-    }
+    
+    nextTick(() => {
+      supabase.auth.getUser().then(res => {
+        console.log('用户信息', res);
+        setGithub(res);
+        window.history.replaceState(null, '', cleanUrl)
+      });
+    })
   }
 })
 </script>
