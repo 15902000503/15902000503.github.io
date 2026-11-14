@@ -1,42 +1,48 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue'
+import type { User } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabase'
 import { useAuthStore } from '@/stores/auth'
 
 const auth = useAuthStore()
-async function setGithub(user: any) {
-  if (!user) return
-  const meta = { ...user.user_metadata }
-  console.log('登录成功，用户信息：', user.user_metadata)
+async function setGithub(user: User) {
+  const metadata = user.user_metadata ?? {}
+  const name = [metadata.name, metadata.full_name, metadata.user_name, metadata.preferred_username]
+    .find((value): value is string => typeof value === 'string' && value.trim().length > 0)
+    ?.trim()
 
   await auth.signInWithProfile({
-    name: meta.user_name,
-    email: meta.email,
+    name: name ?? user.email?.split('@')[0] ?? 'GitHub User',
+    email: user.email ?? metadata.email ?? '',
     provider: 'github',
   })
 }
+
 onMounted(async () => {
   const fullHash = window.location.hash
 
-  // 1. 判断是不是从 GitHub 登录回来的
-  if (fullHash.includes('#access_token')) {
-    // 2. 精准切割：只保留 #access_token 之前的路径
+  if (fullHash.includes('access_token=')) {
     const cleanHash = fullHash.split('#access_token')[0]
     const cleanUrl =
       window.location.origin + window.location.pathname + window.location.search + cleanHash
 
-    const {
-      data: { session },
-    } = await supabase.auth.getSession()
-    //window.history.replaceState(null, '', cleanUrl)
-    if (session) {
-      console.log('登录成功，用户信息：', session)
-      const user = session.user;
-      setGithub(user);
-    } else {
-      const data = await supabase.auth.getUser();
-      console.log('登录成功，用户信息：', data)
-      setGithub(data);
+    try {
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession()
+      if (sessionError) throw sessionError
+
+      let user = session?.user
+      if (!user) {
+        const { data, error } = await supabase.auth.getUser()
+        if (error) throw error
+        user = data.user
+      }
+
+      if (user) {
+        await setGithub(user)
+        window.history.replaceState(null, '', cleanUrl)
+      }
+    } catch (error) {
+      console.error('[github-login] failed to load user profile', error)
     }
   }
 })
