@@ -4,7 +4,7 @@ import { supabase } from '@/lib/supabase'
 import { useAuthStore } from '@/stores/auth'
 
 const auth = useAuthStore()
-async function setGithub(user: Record<string, any>) {
+async function setGithub(user: any) {
   if (!user) return
   const meta = { ...user.user_metadata }
   console.log('登录成功，用户信息：', user.user_metadata)
@@ -35,6 +35,7 @@ onMounted(async () => {
       setGithub(user);
     } else {
       const data = await supabase.auth.getUser();
+      console.log('登录成功，用户信息：', data)
       setGithub(data);
     }
   }
