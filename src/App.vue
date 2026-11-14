@@ -31,10 +31,10 @@ onMounted(async () => {
     window.history.replaceState(null, '', cleanUrl)
     if (session) {
       console.log('登录成功，用户信息：', session)
-      const user = session.user
+      const user = session.user;
       setGithub(user);
     } else {
-      const { data, error } = await supabase.auth.getUser()
+      const data = await supabase.auth.getUser();
       setGithub(data);
     }
   }
