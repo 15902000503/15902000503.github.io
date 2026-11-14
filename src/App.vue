@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onMounted, nextTick } from 'vue'
+import { onMounted } from 'vue'
 import { supabase } from '@/lib/supabase'
 import { useAuthStore } from '@/stores/auth'
 
@@ -7,6 +7,8 @@ const auth = useAuthStore()
 async function setGithub(user: any) {
   if (!user) return
   const meta = { ...user.user_metadata }
+  console.log('登录成功，用户信息：', user.user_metadata)
+
   await auth.signInWithProfile({
     name: meta.user_name,
     email: meta.email,
@@ -22,14 +24,20 @@ onMounted(async () => {
     const cleanHash = fullHash.split('#access_token')[0]
     const cleanUrl =
       window.location.origin + window.location.pathname + window.location.search + cleanHash
-    
-    nextTick(() => {
-      supabase.auth.getUser().then(res => {
-        console.log('用户信息', res);
-        setGithub(res);
-        window.history.replaceState(null, '', cleanUrl)
-      });
-    })
+
+    const {
+      data: { session },
+    } = await supabase.auth.getSession()
+    //window.history.replaceState(null, '', cleanUrl)
+    if (session) {
+      console.log('登录成功，用户信息：', session)
+      const user = session.user;
+      setGithub(user);
+    } else {
+      const data = await supabase.auth.getUser();
+      console.log('登录成功，用户信息：', data)
+      setGithub(data);
+    }
   }
 })
 </script>
