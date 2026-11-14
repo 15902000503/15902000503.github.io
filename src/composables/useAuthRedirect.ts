@@ -7,6 +7,7 @@
  */
 const AUTH_ROUTE_NAMES = new Set(['Login', 'Register', 'ForgotPassword'])
 const ORIGIN_KEY = 'auth-o…rigin'
+const OAUTH_REDIRECT_KEY = 'auth-oauth-redirect'
 
 function readStoredOrigin(): string | null {
   try {
@@ -47,6 +48,26 @@ function isInternalPath(path: string): boolean {
   // 仅接受站内绝对路径：排除 //evil.com（协议相对）与 /\evil.com
   // （浏览器会把反斜杠归一化成斜杠，同样构成外域跳转）
   return path.startsWith('/') && !path.startsWith('//') && !path.startsWith('/\\')
+}
+
+/** GitHub OAuth uses the app base URL as callback to keep route hashes out of the token fragment. */
+export function recordOAuthRedirect(path: string) {
+  try {
+    if (isInternalPath(path)) sessionStorage.setItem(OAUTH_REDIRECT_KEY, path)
+  } catch {
+    /* If storage is unavailable, the regular auth origin remains the fallback. */
+  }
+}
+
+/** Read and consume the route saved before the full-page OAuth redirect. */
+export function consumeOAuthRedirect(): string | null {
+  try {
+    const path = sessionStorage.getItem(OAUTH_REDIRECT_KEY)
+    sessionStorage.removeItem(OAUTH_REDIRECT_KEY)
+    return path && isInternalPath(path) ? path : null
+  } catch {
+    return null
+  }
 }
 
 /** 与 resolveLoginRedirect 相同的优先级，但不消费来源记录 */

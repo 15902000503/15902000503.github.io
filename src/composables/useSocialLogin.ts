@@ -5,7 +5,7 @@ import { toast } from 'vue-sonner'
 import { googleTokenLogin } from 'vue3-google-login'
 import { supabase } from '@/lib/supabase'
 import { providerLabelKey, type SocialProviderId } from '@/components/business/social/providers'
-import { peekLoginRedirect } from '@/composables/useAuthRedirect'
+import { peekLoginRedirect, recordOAuthRedirect } from '@/composables/useAuthRedirect'
 import { useAuthStore } from '@/stores/auth'
 
 /**
@@ -171,15 +171,13 @@ export function useSocialLogin(onSuccess: () => void) {
 
   /** GitHub：通过 Supabase 发起 OAuth 授权（整页跳转，成功后回到来源路由） */
   async function loginWithGithub() {
-    // 回跳目标与 Google/Facebook 成功后 goAfterLogin 的解析保持一致：
-    // ?redirect= 查询参数 > 进入登录页前的来源路由 > 首页。
-    // router.resolve 兼容 hash / history 两种路由模式。
     const target = peekLoginRedirect(route.query.redirect)
+    recordOAuthRedirect(target)
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'github',
       options: {
         scopes: 'read:user user:email', // 请求读取用户资料和邮箱
-        redirectTo: window.location.origin + router.resolve(target).href,
+        redirectTo: new URL(import.meta.env.BASE_URL, window.location.origin).toString(),
       },
     })
     if (error) {
