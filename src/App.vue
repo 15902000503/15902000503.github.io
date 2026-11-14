@@ -4,29 +4,33 @@ import { supabase } from '@/lib/supabase'
 import { useAuthStore } from '@/stores/auth'
 
 const auth = useAuthStore()
-onMounted(async () => {
-  // 1. 判断是不是从 GitHub 登录回来的
-  console.log('start: ')
-  alert('start')
-  if (window.location.hash.includes('access_token')) {
-    // 2. 清除 URL 里的 token，防止暴露在地址栏
-    window.history.replaceState(null, '', window.location.pathname + window.location.search)
 
-    // 3. 获取用户信息（此时 Supabase 已经处理好了 Token）
+onMounted(async () => {
+  const fullHash = window.location.hash
+
+  // 1. 判断是不是从 GitHub 登录回来的
+  if (fullHash.includes('#access_token')) {
+    // 2. 精准切割：只保留 #access_token 之前的路径
+    const cleanHash = fullHash.split('#access_token')[0]
+    const cleanUrl =
+      window.location.origin + window.location.pathname + window.location.search + cleanHash
+
     const {
       data: { session },
     } = await supabase.auth.getSession()
-
+    window.history.replaceState(null, '', cleanUrl)
     if (session) {
       console.log('登录成功，用户信息：', session)
-      alert(JSON.stringify(session))
       const user = session.user
       if (!user) return
       if (user.app_metadata?.provider !== 'github') return
+
       const ghIdentity =
         user.identities?.find((item) => item.provider === 'github')?.identity_data ?? {}
       const meta = { ...ghIdentity, ...user.user_metadata }
+
       console.log('登录成功，用户信息：', session.user.user_metadata)
+
       await auth.signInWithProfile({
         name:
           meta.full_name ??
